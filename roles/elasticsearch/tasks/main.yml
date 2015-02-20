@@ -1,0 +1,37 @@
+---
+- name: Add rpm elasticsearch repository
+  sudo: yes
+  template: src=elasticsearch.repo dest=/etc/yum.repos.d/elasticsearch.repo
+
+- name: Install elasticsearch
+  sudo: yes
+  yum: name=elasticsearch state=installed
+
+# - name: Install elasticsearch-kopf
+#   sudo: yes
+#   command: /usr/share/elasticsearch/bin/plugin --install lmenezes/elasticsearch-kopf/{{ kopf_version }} creates=/usr/share/elasticsearch/plugins/kopf
+
+- name: Install cloud-aws
+  sudo: yes
+  command: /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-cloud-aws/{{ es_aws_version }} creates=/usr/share/elasticsearch/plugins/cloud-aws
+
+- name: Install kuromoji
+  sudo: yes
+  command: /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-kuromoji/{{ kuromoji_version }} creates=/usr/share/elasticsearch/plugins/analysis-kuromoji
+
+# - name: Install Kibana3
+#   sudo: yes
+#   command: /usr/share/elasticsearch/bin/plugin -url http://download.elasticsearch.org/kibana/kibana/kibana-latest.zip -install elasticsearch/kibana3 creates=/usr/share/elasticsearch/plugins/kibana3
+
+- name: Create templates dir
+  sudo: yes
+  command: mkdir /etc/elasticsearch/templates creates=/etc/elasticsearch/templates
+
+- name: Copy default template
+  sudo: yes
+  template: src=default.json dest=/etc/elasticsearch/templates/default.json
+
+- name: Copy elasticsearch configuration
+  sudo: yes
+  template: src=elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
+  notify: restart elasticsearch

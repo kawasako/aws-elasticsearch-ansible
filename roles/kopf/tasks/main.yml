@@ -1,0 +1,8 @@
+---
+- name: Download kopf
+  sudo: yes
+  git: repo=https://github.com/lmenezes/elasticsearch-kopf.git dest=/etc/elasticsearch-kopf version={{ kopf_version }}
+
+- name: Create link
+  sudo: yes
+  command: ln -s /etc/elasticsearch-kopf /usr/share/nginx/html/kopf creates=/usr/share/nginx/html/kopf

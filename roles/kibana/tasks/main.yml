@@ -1,0 +1,17 @@
+---
+- name: Create kibana dir
+  sudo: yes
+  command: mkdir /etc/kibana creates=/etc/kibana
+
+- name: Download kibana
+  sudo: yes
+  command: curl -O https://download.elasticsearch.org/kibana/kibana/{{ kibana_version }}.tar.gz chdir=/etc/kibana creates=/etc/kibana/{{ kibana_version }}.tar.gz
+
+- name: Install kibana
+  sudo: yes
+  command: tar xvzf {{ kibana_version }}.tar.gz chdir=/etc/kibana creates=/etc/kibana/{{ kibana_version }}
+
+- name: Copy Kibana config
+  sudo: yes
+  template: src=kibana.yml dest=/etc/kibana/{{ kibana_version }}/config/kibana.yml
+  # notify: Restart kibana

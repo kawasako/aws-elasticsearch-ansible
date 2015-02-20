@@ -1,0 +1,4 @@
+---
+kibana_version: kibana-4.0.0-BETA2
+es_host: es.unionquery.net
+kopf_version: v1.3.8

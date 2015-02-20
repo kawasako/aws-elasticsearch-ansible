@@ -1,0 +1,5 @@
+cluster.name: my-cluster
+discovery.zen.ping.multicast.enabled: false
+discovery.type: ec2
+cloud.aws.region: ap-northeast-1
+http.cors.enabled: true

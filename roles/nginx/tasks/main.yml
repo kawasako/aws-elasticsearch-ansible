@@ -1,0 +1,14 @@
+---
+- name: Install nginx
+  sudo: yes
+  yum: name=nginx state=installed
+
+- name: Copy nginx configuration
+  sudo: yes
+  template: src=default.conf dest=/etc/nginx/conf.d/default.conf
+  notify: restart nginx
+
+- name: Copy .htpasswd
+  sudo: yes
+  template: src=.htpasswd dest=/usr/share/nginx/html/.htpasswd
+  notify: restart nginx

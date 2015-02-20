@@ -1,0 +1,8 @@
+---
+- name: Restart kibana
+  sudo: yes
+  shell: "{{ item }}"
+  with_items:
+    - "pkill -9 -f kibana.jar"
+    # - "/etc/kibana/{{ kibana_version }}/bin/kibana & exit"
+    # うまくいかんので手動 $ /etc/kibana/kibana-4.0.0-BETA2/bin/kibana & exit

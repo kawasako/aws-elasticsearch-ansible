@@ -1,0 +1,20 @@
+---
+- name: yum update
+  sudo: yes
+  yum: name=* state=latest
+
+- name: Install yum packages
+  sudo: yes
+  yum: name={{ item }} state=installed
+  with_items:
+    - git
+    - openssl-devel
+    - libcurl-devel
+    - gcc
+    - gcc-c++
+    - make
+    - curl
+
+- name: Setting time zone
+  sudo: yes
+  copy: src=/usr/share/zoneinfo/Asia/Tokyo dest=/etc/localtime
